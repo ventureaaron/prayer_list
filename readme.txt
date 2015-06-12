@@ -1,9 +1,27 @@
+6/12/15 - KNOWN BUGS, FIXES COMING!
+******************************************************************
+1. HTML characters not escaped properly, apostrophes create chaos and break
+on edit.
+2. Using deprecated mysql functions as opposed to mysqli
+3. (ENHANCEMENT) Headings to clarify edit screen section
+4. FIXED: passwords case insensitive - See description for DB Tables setup.
+5. In edit can't see all characters in description
+6. Have to reenter everything on editing existing
+7.(ENHANCEMENT) Give easy way to reload or "cancel" if edit is aborted
+8. (ENHANCEMENT) Possible character counter to show how many characters are
+left for description field
+*******************************************************************
+
 This can almost be used as is. Following is what should be done
 assuming you have a server stack with php and a MySQL server within
 your grasp. By using this product you accept full responsibility 
 for violation of laws, failures, or other issues that may arise from 
 use of this system - I will even alert you to possible HIPPA violations 
-depending on how detailed of info you store, so be warned! 
+depending on how detailed of info you store, so be warned! I'm letting
+our church members know that they should only store first names and a 
+reference to requestor (like "cindy, friend of bill") - but i'm not a
+lawyer and don't know if a industrious and litigous person (AKA jerk)
+would have a case against you with this.
 I am interested in helping you with functionality
 issues or hearing recommendations, this is a learning experience from
 me and had to pull knowledge from several different sources. Reach me at
@@ -28,6 +46,11 @@ DB Tables -> This requires 2 tables in the same database.
 	Table 1 -> Should be named "pl_user" and contain 3 columns:
 		"userid" varchar -> users use this as ID to login with
 		"password" varchar -> plaintext password users use to login with
+		*EDIT (FIX ISSUE#4) - password field should have collation type of binary. The mysql default is latin-swedish and if
+			not changed to something like latin-bin the password will be found regardless of case (ex. if password is "PASSWORD",
+			an entry of "password" would still work). This is because prayerlist does not hash the passwords before storing them
+			in the database. This allows account creation and password handling directly at the database. If you want userid to also be
+			case sensitive then you could also change the collation type of that field.
 		"role" varchar -> value of role for user needs to be "edit" or "read"
 
 		There is no account creation in the webpage so user accounts
