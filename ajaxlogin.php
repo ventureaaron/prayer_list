@@ -7,21 +7,22 @@ if(isset($_POST['login']) && isset($_POST['pwd']))
 {
 	// username and password sent from Form
 	$login=$_POST['login'];
-	$login=string_clean($login);
-	//$login="edit";
+
 	$pwd = $_POST['pwd'];
-	//Here converting passsword into MD5 encryption. 
-	$pwd=string_clean($pwd);
-	$db_conn = mysql_connect($db_hostname, $db_username, $db_password);
-	if (!$db_conn) die ("Unable to connect to MySql DB: " . mysql_error());
-	mysql_select_db($db_database) or die("Unable to connect to DB: " . mysql_error());
-	
+
+	$db_conn = mysqli_connect($db_hostname, $db_username, $db_password, $db_database);
+	if (!$db_conn) die ("Unable to connect to MySql DB: " . mysqli_error());
+
+	$login=string_clean($db_conn, $login);
+	$pwd=string_clean($db_conn, $pwd);
+
+		
 	$query = "SELECT * FROM pl_user WHERE userid='$login' and password='$pwd'";
-	$result = mysql_query($query);
-	if (!$result) die ("Database access failed: ".mysql_error());
+	$result = mysqli_query($db_conn,$query);
+	if (!$result) die ("Database access failed: ".mysqli_error());
 	
-	$count=mysql_num_rows($result);
-	$row=mysql_fetch_array($result,MYSQL_ASSOC);
+	$count=mysqli_num_rows($result);
+	$row=mysqli_fetch_array($result,MYSQLI_ASSOC);
 	// If result matched $username and $password, table row  must be 1 row
 	if($count==1)
 	{

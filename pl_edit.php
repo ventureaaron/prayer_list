@@ -1,5 +1,6 @@
 <?php
 	require 'pl_login.php';
+	echo "<p class='lead'>Add a prayer:</p>";
 
 	//add prayer section at top
 	echo "<div class='statement well'>";
@@ -27,37 +28,44 @@
 	echo '	</form></center>';
 	echo "</div>";
 	
-	$db_conn = mysql_connect($db_hostname, $db_username, $db_password);
-	if (!$db_conn) die ("Unable to connect to MySql DB: " . mysql_error());
-	mysql_select_db($db_database) or die("Unable to connect to DB: " . mysql_error());
+	$db_conn = mysqli_connect($db_hostname, $db_username, $db_password, $db_database);
+	if (!$db_conn) die ("Unable to connect to MySql DB: " . mysqli_error());
 	
 	$query = "SELECT * FROM prayerlist WHERE status='open'";
-	$result = mysql_query($query);
-	if (!$result) die ("Database access failed: ".mysql_error());
-	else if (mysql_num_rows($result))
+	$result = mysqli_query($db_conn,$query);
+	if (!$result) die ("Database access failed: ".mysqli_error());
+	else if (mysqli_num_rows($result))
         {
-          while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
+	  echo "<p class='lead'>Prayer list:</p>";
+
+          while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
           	$pid = $row['pid'];
             $name = $row['name'];
+	    $name = htmlentities($name, ENT_QUOTES);
             $date = $row['date'];
             $description = $row['description'];
+	    $description = htmlentities($description, ENT_QUOTES);
             $contact = $row['contact'];
+	    $contact = htmlentities($contact, ENT_QUOTES);
             $status = $row['status'];
             echo "<div class='statement well'>";
 			echo "	<center><form class='form-inline' role='form' action='' method='post'>";
 			echo "	<div class='form-group'>";
 			echo "	<label for='$pid"."name'>Name:</label>";
-			echo "	<input type='input' class='form-control' id='$pid"."name' placeholder='$name'>";
+			echo "	<input type='input' class='form-control' id='$pid"."name' placeholder='$name'>";			
 			echo '	</div>';
+
 			echo '	<div class="form-group">';
 			echo "	<label for='$pid"."desc'>Description:</label>";
-			echo "	<input type='input' class='form-control' id='$pid"."desc' placeholder='$description'>";
+			echo "	<textarea type='input' class='form-control' id='$pid"."desc' placeholder='$description' size='500' maxlength='500'></textarea>";
 			echo '	</div>';
+
 			echo '	<div class="form-group">';
 			echo "	<label for='$pid"."cont'>Contact:</label>";
 			echo "	<input type='input' class='form-control' id='$pid"."cont' placeholder='$contact'>";
 			echo '	</div>';
+
 			echo "  <div class='form-group'>";
 			echo "  <label for='$pid"."status'>Status:</label>";
 			echo "  <select class='form-control' id='$pid"."status'>";

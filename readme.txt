@@ -1,16 +1,26 @@
 6/12/15 - KNOWN BUGS, FIXES COMING!
 ******************************************************************
-1. HTML characters not escaped properly, apostrophes create chaos and break
-on edit.
-2. Using deprecated mysql functions as opposed to mysqli
-3. (ENHANCEMENT) Headings to clarify edit screen section
-4. FIXED: passwords case insensitive - See description for DB Tables setup.
-5. In edit can't see all characters in description
-6. Have to reenter everything on editing existing
-7.(ENHANCEMENT) Give easy way to reload or "cancel" if edit is aborted
-8. (ENHANCEMENT) Possible character counter to show how many characters are
+1. Have to reenter everything on editing existing
+2. (ENHANCEMENT) Give easy way to reload or "cancel" if edit is aborted
+3. (ENHANCEMENT) Possible character counter to show how many characters are
 left for description field
 *******************************************************************
+6/12/15 - FIXES
+1. FIXED: passwords case insensitive - See description for DB Tables setup in this document.
+Short description: change field collation in DB.
+2. FIXED: (ENHANCEMENT) Headings to clarify edit screen section - added
+3. FIXED: In edit can't see all characters in description - changed description
+input field to textarea input
+4. FIXED: HTML characters not escaped properly, apostrophes create chaos and break
+on edit. - htmlentities($string, ENT_QUOTES) on edit page
+5. FIXED: Using deprecated mysql functions as opposed to mysqli - updated
+********************************************************************
+
+
+
+
+
+
 
 This can almost be used as is. Following is what should be done
 assuming you have a server stack with php and a MySQL server within

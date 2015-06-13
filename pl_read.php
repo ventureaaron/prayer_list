@@ -1,16 +1,15 @@
 <?php
 	require 'pl_login.php';
 
-	$db_conn = mysql_connect($db_hostname, $db_username, $db_password);
-	if (!$db_conn) die ("Unable to connect to MySql DB: " . mysql_error());
-	mysql_select_db($db_database) or die("Unable to connect to DB: " . mysql_error());
+	$db_conn = mysqli_connect($db_hostname, $db_username, $db_password, $db_database);
+	if (!$db_conn) die ("Unable to connect to MySql DB: " . mysqli_error());
 	
 	$query = "SELECT * FROM prayerlist WHERE status='open'";
-	$result = mysql_query($query);
-	if (!$result) die ("Database access failed: ".mysql_error());
-	else if (mysql_num_rows($result))
+	$result = mysqli_query($db_conn,$query);
+	if (!$result) die ("Database access failed: ".mysqli_error());
+	else if (mysqli_num_rows($result))
         {
-          while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
+          while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
           {
             $name = $row['name'];
             $date = $row['date'];
