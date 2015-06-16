@@ -47,6 +47,12 @@
 			}
 			return false;
 		});
+		$('.pray').click(function()
+				{
+					$(this).css("background-color","#BEF781");
+					return false;
+				});
+
 
 		$('#add').click(function()
 				{

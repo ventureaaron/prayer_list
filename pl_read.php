@@ -16,7 +16,7 @@
             $description = $row['description'];
             $contact = $row['contact'];
             $status = $row['status'];
-            echo "<div class='well statement alert-info'>";
+            echo "<div class='well statement alert-info pray'>";
             echo "<p>$name :</p>";
             echo "<p>$description</p>";
             echo "<p>$date</p>";
